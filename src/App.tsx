@@ -61,7 +61,10 @@ function App() {
           </div>
         </>
       )}
-      <h1 className="text-5xl justify-start">Harmonix</h1>
+      <div className="flex items-center w-full justify-center -ml-7">
+        <img src="/favicon.png" alt="logo" className="w-20" />
+        <h1 className="text-5xl">Harmonix</h1>
+      </div>
       <section className="w-[1024px] flex flex-col p-5 gap-10 ring ring-purple-600 rounded">
         <div className="flex flex-col gap-3">
           <h1>Enter Prompt</h1>
