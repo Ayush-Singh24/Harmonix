@@ -5,7 +5,8 @@ import { Textarea } from "./components/ui/textarea";
 import { VoiceSelector } from "./components/VoiceSelector";
 import { GenreType, VoiceType } from "./types/types";
 import { Button } from "./components/ui/button";
-import { getSong, getSongId } from "./services/services";
+import { generateLyrics, getSong, getSongId } from "./services/services";
+import { useToast } from "./hooks/use-toast";
 
 function App() {
   const [voiceType, setVoiceType] = useState<VoiceType>("male");
@@ -14,7 +15,16 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [audioUrl, setAudioUrl] = useState<string>("");
 
-  const handleCustormLyrics = async () => {
+  const { toast } = useToast();
+
+  const handleCustomLyrics = async () => {
+    if (prompt.length <= 50) {
+      toast({
+        title: "Invalid Input",
+        description: "Enter at least 50 characters.",
+      });
+      return;
+    }
     let intervalId: NodeJS.Timeout;
     try {
       setIsLoading(true);
@@ -34,6 +44,11 @@ function App() {
     }
   };
 
+  const handleGenerateLyrics = async () => {
+    const lyrics = await generateLyrics(prompt);
+    setPrompt(lyrics);
+  };
+
   return (
     <main className="h-screen flex flex-col items-center p-10 gap-20">
       <h1 className="text-5xl justify-start">Harmonix</h1>
@@ -43,7 +58,7 @@ function App() {
           <Textarea
             placeholder="Leave lyrics to us or enter your own lyrics"
             value={prompt}
-            onChange={(e) => setPrompt(e.currentTarget.value)}
+            onChange={(e) => setPrompt(e.currentTarget.value.trimStart())}
           />
         </div>
         <section className="flex gap-20 w-full">
@@ -56,10 +71,12 @@ function App() {
             <GenreSelector genre={genre} setGenre={setGenre} />
           </div>
           <div className="ml-auto flex gap-10">
-            <Button variant={"default"} onClick={handleCustormLyrics}>
-              Your lyrics
+            <Button variant={"default"} onClick={handleGenerateLyrics}>
+              Generate Lyrics
             </Button>
-            <Button variant={"default"}>Our lyrics</Button>
+            <Button variant={"default"} onClick={handleCustomLyrics}>
+              Generate Song
+            </Button>
           </div>
         </section>
       </section>
