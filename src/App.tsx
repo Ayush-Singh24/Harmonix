@@ -7,6 +7,7 @@ import { GenreType, VoiceType } from "./types/types";
 import { Button } from "./components/ui/button";
 import { generateLyrics, getSong, getSongId } from "./services/services";
 import { useToast } from "./hooks/use-toast";
+import { ClimbingBoxLoader } from "react-spinners";
 
 function App() {
   const [voiceType, setVoiceType] = useState<VoiceType>("male");
@@ -17,7 +18,7 @@ function App() {
 
   const { toast } = useToast();
 
-  const handleCustomLyrics = async () => {
+  const handleGenerateSong = async () => {
     if (prompt.length <= 50) {
       toast({
         title: "Invalid Input",
@@ -51,11 +52,20 @@ function App() {
 
   return (
     <main className="h-screen flex flex-col items-center p-10 gap-20">
+      {isLoading && (
+        <>
+          <div className="top-0 left-0 h-screen w-screen z-10 fixed backdrop-blur-lg opacity-75 " />
+          <div className="fixed top-0 left-0 h-screen w-screen flex justify-center items-center z-20">
+            <ClimbingBoxLoader color="#6d28d9" size={30} />
+          </div>
+        </>
+      )}
       <h1 className="text-5xl justify-start">Harmonix</h1>
       <section className="w-[1024px] flex flex-col p-5 gap-10 ring ring-purple-600 rounded">
         <div className="flex flex-col gap-3">
           <h1>Enter Prompt</h1>
           <Textarea
+            disabled={isLoading}
             placeholder="Leave lyrics to us or enter your own lyrics"
             value={prompt}
             onChange={(e) => setPrompt(e.currentTarget.value.trimStart())}
@@ -71,10 +81,18 @@ function App() {
             <GenreSelector genre={genre} setGenre={setGenre} />
           </div>
           <div className="ml-auto flex gap-10">
-            <Button variant={"default"} onClick={handleGenerateLyrics}>
+            <Button
+              disabled={isLoading}
+              variant={"default"}
+              onClick={handleGenerateLyrics}
+            >
               Generate Lyrics
             </Button>
-            <Button variant={"default"} onClick={handleCustomLyrics}>
+            <Button
+              disabled={isLoading}
+              variant={"default"}
+              onClick={handleGenerateSong}
+            >
               Generate Song
             </Button>
           </div>
