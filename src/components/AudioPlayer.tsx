@@ -210,7 +210,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
             step={0.01}
             value={[playerState.volume]}
             onValueChange={handleVolumeChange}
-            className="w-24 z-20"
+            className="w-24"
           />
         </div>
 

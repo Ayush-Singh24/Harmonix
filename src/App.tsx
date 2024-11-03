@@ -31,6 +31,7 @@ function App() {
     try {
       setIsLoading(true);
       const response = await getSongId({ prompt, voiceType, genre });
+      console.log(response.jobId);
       intervalId = setInterval(async () => {
         const res = await getSong(response.jobId);
         if (res.status === "completed") {

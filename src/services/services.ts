@@ -6,6 +6,7 @@ import {
   popSongParameters,
   urbanSongParameters,
 } from "@/lib/constants";
+import { breakString } from "@/lib/utils";
 import { GenreType, VoiceType } from "@/types/types";
 
 const headers = {
@@ -35,8 +36,8 @@ export const getSongId = async ({
   voiceType: VoiceType;
   genre: GenreType;
 }) => {
-  let payload = { ...data, lyrics: [prompt] };
-
+  const input = breakString(prompt, 6);
+  let payload = { ...data, lyrics: input };
   switch (voiceType) {
     case "male":
       payload = { ...payload, ...maleVoiceParameters };
