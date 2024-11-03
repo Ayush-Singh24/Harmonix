@@ -8,6 +8,7 @@ import { Button } from "./components/ui/button";
 import { generateLyrics, getSong, getSongId } from "./services/services";
 import { useToast } from "./hooks/use-toast";
 import { ClimbingBoxLoader } from "react-spinners";
+import AudioPlayer from "./components/AudioPlayer";
 
 function App() {
   const [voiceType, setVoiceType] = useState<VoiceType>("male");
@@ -99,7 +100,11 @@ function App() {
         </section>
       </section>
       {audioUrl && (
-        <audio autoPlay controls src={audioUrl} typeof="audio/mpeg" />
+        <AudioPlayer
+          waveColor="#3a1673"
+          progressColor="#6d28d9"
+          audioUrl={audioUrl}
+        />
       )}
     </main>
   );
