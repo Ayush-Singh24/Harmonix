@@ -9,6 +9,15 @@ import { Button } from "./components/ui/button";
 function App() {
   const [voiceType, setVoiceType] = useState<VoiceType>("male");
   const [genre, setGenre] = useState<GenreType>("pop");
+  const [prompt, setPrompt] = useState<string>("");
+
+  const handleCustormLyrics = () => {
+    console.log({
+      voiceType,
+      genre,
+      prompt,
+    });
+  };
 
   return (
     <main className="h-screen flex flex-col items-center p-10 gap-20">
@@ -16,7 +25,11 @@ function App() {
       <section className="w-[1024px] flex flex-col p-5 gap-10 ring ring-purple-600 rounded">
         <div className="flex flex-col gap-3">
           <h1>Enter Prompt</h1>
-          <Textarea placeholder="Leave lyrics to us or enter your own lyrics" />
+          <Textarea
+            placeholder="Leave lyrics to us or enter your own lyrics"
+            value={prompt}
+            onChange={(e) => setPrompt(e.currentTarget.value)}
+          />
         </div>
         <section className="flex gap-20 w-full">
           <div className="flex gap-3 items-center">
@@ -28,7 +41,9 @@ function App() {
             <GenreSelector genre={genre} setGenre={setGenre} />
           </div>
           <div className="ml-auto flex gap-10">
-            <Button variant={"default"}>Your lyrics</Button>
+            <Button variant={"default"} onClick={handleCustormLyrics}>
+              Your lyrics
+            </Button>
             <Button variant={"default"}>Our lyrics</Button>
           </div>
         </section>
