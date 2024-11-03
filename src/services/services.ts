@@ -73,7 +73,6 @@ export const getSongId = async ({
 
 export const getSong = async (jobId: string) => {
   const getUrl = `${url}/${jobId}`;
-  console.log(getUrl);
   const response = await fetch(getUrl, {
     method: "GET",
     headers: headers,
@@ -117,7 +116,6 @@ export const generateLyrics = async (prompt: string) => {
 
   if (response.ok) {
     const data = await response.json();
-    console.log(data.choices[0].message?.content);
     return data.choices[0].message?.content;
   } else {
     console.error(await response.json());
