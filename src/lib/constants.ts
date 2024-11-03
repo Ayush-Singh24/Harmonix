@@ -26,3 +26,13 @@ export const edmSongParameters = {
     "themes/LazerBeam/score/LazerBeam_Score_Data_AB.json",
   scoreFileRemotePath: "themes/LazerBeam/score/LazerBeam_Melody_AB.json",
 };
+
+export const maleVoiceParameters = {
+  voiceModel: "Randy_v3o",
+  voiceModelStyle: "randy",
+};
+
+export const femaleVoiceParameters = {
+  voiceModel: "Ayesha_v3",
+  voiceModelStyle: "ayesha",
+};

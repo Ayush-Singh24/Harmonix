@@ -5,18 +5,16 @@ import { Textarea } from "./components/ui/textarea";
 import { VoiceSelector } from "./components/VoiceSelector";
 import { GenreType, VoiceType } from "./types/types";
 import { Button } from "./components/ui/button";
+import { getSongId } from "./services/services";
 
 function App() {
   const [voiceType, setVoiceType] = useState<VoiceType>("male");
   const [genre, setGenre] = useState<GenreType>("pop");
   const [prompt, setPrompt] = useState<string>("");
 
-  const handleCustormLyrics = () => {
-    console.log({
-      voiceType,
-      genre,
-      prompt,
-    });
+  const handleCustormLyrics = async () => {
+    const response = await getSongId({ prompt, voiceType, genre });
+    console.log(response);
   };
 
   return (
