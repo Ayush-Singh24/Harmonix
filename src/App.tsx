@@ -5,16 +5,33 @@ import { Textarea } from "./components/ui/textarea";
 import { VoiceSelector } from "./components/VoiceSelector";
 import { GenreType, VoiceType } from "./types/types";
 import { Button } from "./components/ui/button";
-import { getSongId } from "./services/services";
+import { getSong, getSongId } from "./services/services";
 
 function App() {
   const [voiceType, setVoiceType] = useState<VoiceType>("male");
   const [genre, setGenre] = useState<GenreType>("pop");
   const [prompt, setPrompt] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [audioUrl, setAudioUrl] = useState<string>("");
 
   const handleCustormLyrics = async () => {
-    const response = await getSongId({ prompt, voiceType, genre });
-    console.log(response);
+    let intervalId: NodeJS.Timeout;
+    try {
+      setIsLoading(true);
+      const response = await getSongId({ prompt, voiceType, genre });
+      console.log(response.jobId);
+      intervalId = setInterval(async () => {
+        const res = await getSong(response.jobId);
+        console.log(res);
+        if (res.status === "completed") {
+          setAudioUrl(res.transformedAudioUrl);
+          clearInterval(intervalId);
+          setIsLoading(false);
+        }
+      }, 8 * 1000);
+    } catch (error) {
+      console.error("Error to get song (id): ", error);
+    }
   };
 
   return (
@@ -46,6 +63,9 @@ function App() {
           </div>
         </section>
       </section>
+      {audioUrl && (
+        <audio autoPlay controls src={audioUrl} typeof="audio/mpeg" />
+      )}
     </main>
   );
 }

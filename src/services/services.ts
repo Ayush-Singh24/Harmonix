@@ -72,9 +72,14 @@ export const getSongId = async ({
 };
 
 export const getSong = async (jobId: string) => {
-  const response = await fetch(`${url}/${jobId}`, {
+  const getUrl = `${url}/${jobId}`;
+  console.log(getUrl);
+  const response = await fetch(getUrl, {
+    method: "GET",
     headers: headers,
   });
 
-  return response;
+  const json = await response.json();
+
+  return json;
 };
