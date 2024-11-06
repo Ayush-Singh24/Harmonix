@@ -102,7 +102,7 @@ export const generateLyrics = async (
           {
             role: "system",
             content:
-              "You are a music lyrics writer and your task is to write lyrics under 30 words base on user's prompt. Just return the lyrics and nothing else",
+              "You are a music lyrics writer. Write song lyrics in under 30 words based on the user's prompt. Return only the lyrics and nothing else.",
           },
           {
             role: "user",

@@ -67,9 +67,9 @@ function App() {
       )}
       <div className="flex items-center w-full justify-center -ml-7">
         <img src="/favicon.png" alt="logo" className="w-20" />
-        <h1 className="text-5xl">Harmonix</h1>
+        <h1 className="text-5xl">Harrmonix</h1>
       </div>
-      <section className="w-[1200px] flex flex-col p-5 gap-10 ring ring-purple-600 rounded">
+      <section className="w-[1100px] flex flex-col p-5 gap-10 ring ring-purple-600 rounded">
         <div className="flex flex-col gap-3">
           <h1>Enter Prompt</h1>
           <Textarea
